@@ -1,7 +1,16 @@
 import React from "react";
-import BannerImg from "../../assets/Banner.jpg";
+// import BannerImg from "../../assets/Banner.jpg";
+// import BannerImg2 from "../../assets/Bannerimage.jpg";
+import BannerImg3 from "../../assets/Bannerimage3.jpg";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Banner = () => {
+  
+  const navigate = useNavigate();
+
+
   return (
     <section className="hero is-success is-half-height has-background-black is-gap-3">
       <div className="container columns is-vcentered mt-6 mb-6 pt-6 pb-6">
@@ -16,15 +25,15 @@ const Banner = () => {
               Reach
             </h2>
           </p>
-          <button className="button has-background-black has-text-black mt-6 mt-4-mobile  px-4 py-2 px-2-mobile py-1-mobile is-size-4 is-size-6-mobile has-background-warning  ">
+          <button onClick={() =>navigate('/campaign')} className="button has-background-black has-text-black mt-6 mt-4-mobile  px-4 py-2 px-2-mobile py-1-mobile is-size-4 is-size-6-mobile has-background-warning  ">
             Create campaign
           </button>
         </div>
-        <div className="column image">
+        <div className="column image is-flex is-justify-content-center is-align-items-center">
           <img
-            className="custom-border-shadow bannerImage  "
-            src={BannerImg}
-            style={{ width: "400px", height: "350px" }}
+            className="custom-border-shadow bannerImage "
+            src={BannerImg3}
+            style={{ width: "380px", height: "500px", borderRadius: "10px" }}
             alt=""
           />
         </div>

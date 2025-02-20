@@ -24,11 +24,11 @@ const Footer = () => {
               <p className="hLinks-text-grey-dLinkrk mb-6">
                 Celeb Media Pvt. Ltd. is your go-to platform for impactful brand promotion through celebrity endorsements. We connect brands with top influencers, creating memorable campaigns that engage audiences and boost visibility. Elevate your brand with Celewish and let the stars tell your story!
               </p>
-              <div>
+              <div >
                 <Link className="mr-3 is-inline-block" to="#">
                   
                 </Link>
-                <Link className="mr-3 is-inline-block is-size-2" to="#">
+                <Link className="mr-3  is-inline-block is-size-2" to="#">
                   <TbBrandLinkedinFilled/>
                 </Link>
                 <Link className="mr-3 is-inline-block is-size-3" to="#">
@@ -42,7 +42,7 @@ const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div className="column is-9">
+            <div className="column is-9 pt-6 mt-2">
               <div className="columns is-multiline">
                 <div className="column is-6 is-3-desktop mb-5">
                   <h4 className="is-size-4 hLinks-text-weight-bold mb-4">

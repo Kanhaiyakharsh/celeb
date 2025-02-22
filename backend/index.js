@@ -2,8 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+dotenv.config();
+
 
 const app = express();
+const API_KEY = process.env.OPENAI_API_KEY;
+
 
 app.use(cors({
     origin: ['http://localhost:3000'],
@@ -14,10 +18,8 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.json())
 
-dotenv.config();
 
-const API_KEY =
-  "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";
+
 
 const port = process.env.PORT || 4000;
 

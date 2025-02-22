@@ -33,7 +33,7 @@ app.post("/campaign", async (req, res) => {
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
 
-      messages: [{ role: "user", content: req.body.message }],
+      messages: [{ role: "assistant", content: req.body.message }],
       // store: true,
       max_tokens: 100,
     }),

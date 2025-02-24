@@ -1,15 +1,15 @@
-const express = require("express");
-// const user_route = express();
+import express from "express";
+import * as userController from "../controllers/userController.js";
+import bodyParser from "body-parser";
 
 const user_route = express.Router();
 
-
-const bodyParser= require('body-parser');
 user_route.use(bodyParser.json());
-user_route.use(bodyParser.urlencoded({extended:true}));
+user_route.use(bodyParser.urlencoded({ extended: true }));
 
-// const userController = require('../controllers/userController');
-const userController = require('../controllers/userController');
+// Twilio send-message, login and register endpoints
 user_route.post('/send-message', userController.sendMessage);
+user_route.post('/login', userController.loginUser);
+user_route.post('/register', userController.registerUser);
 
-module.exports = user_route;
+export default user_route;

@@ -1,8 +1,20 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-dotenv.config();
+// const express = require("express");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const dotenv = require("dotenv");
+// dotenv.config();
+// // import { connect } from "mongoose"
+// // import { connectDB } from "./config/db.js"
+// const { connectDB } = require("./config/db.js");
+
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import user_route from "./routes/userRoute.js";
+import 'dotenv/config';
+import { connectDB } from "./config/db.js";
+
+
 
 
 const app = express();
@@ -14,15 +26,13 @@ app.use(cors({
     credentials: true
 }))
 
-
 app.use(bodyParser.json());
 app.use(express.json())
-
-
-
-
 const port = process.env.PORT || 4000;
+//db connection
+connectDB();
 
+//open API
 app.post("/campaign", async (req, res) => {
   const options = {
     method: "POST",
@@ -45,8 +55,6 @@ app.post("/campaign", async (req, res) => {
    const data = await response.json();
    res.send(data);
 
-
-
   } catch (error) {
     console.log(error);
   }
@@ -54,8 +62,12 @@ app.post("/campaign", async (req, res) => {
 
 
 //for user routes
-const userRoute = require("./routes/userRoute");
-app.use("/", userRoute);
+// const userRoute = require("./routes/userRoute");
+// const user_route = require("./routes/userRoute");
+
+
+// app.use("/", userRoute);
+app.use("/api/user",user_route)
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);

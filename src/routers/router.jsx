@@ -7,6 +7,18 @@ import Contact from "../pages/contact/Contact";
 import Campaign from "../pages/campaign/Campaign";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import PrivateRoute from "../components/PrivateRoute";
+import AdminDashboard from "../admin/AdminDashboard";
+import ManagerDashboard from "../manager/ManagerDashboard";
+import ProfileForm from "../manager/ProfileForm";
+import KYCForm from "../components/KYCForm";
+
+const userId = localStorage.getItem("userId");
+// const userId = JSON.parse(localStorage.getItem("user")) || null;
+
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />,
+        element: <PrivateRoute><About /></PrivateRoute>,
       },
       {
         path: "/contact",
@@ -26,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/campaign",
-        element: <Campaign/>,
+        element: <PrivateRoute><Campaign/></PrivateRoute>,
       },
       {
         path: "/login",
@@ -38,6 +50,28 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/admin-dashboard",
+    element: <AdminDashboard/>
+  },
+  {
+    path: "/manager-dashboard",
+    element: <ManagerDashboard/>,
+    
+  
+  },
+  {
+    path:"/profile-form",
+    element: <ProfileForm/>
+
+  },
+  {
+    path:"/kyc-form",
+    
+    element:<KYCForm userId={userId}/>
+  }
+  
 ]);
 
 export default router;
+

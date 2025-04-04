@@ -1,96 +1,195 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+
+
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
-import { HiMiniBars3CenterLeft, HiOutlineUser } from "react-icons/hi2";
 import logoImg from "../assets/logo.jpg";
+import { AuthContext } from "../context/AuthContext";
 
-
-
-
-const navigation= [
-  {name: "Home", path: "/"},
-  {name: "About", path: "/"},
-  {name: "Campaign", path: "/"},
-  {name: "Help", path: "/"},
-  {name: "Login", path: "/login"},
-
-]
+const navigation = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Campaign", path: "/campaign" },
+  { name: "Help", path: "/contact" },
+  { name: "Login", path: "/login" },
+];
 
 const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNavbarActive, setIsNavbarActive] = useState(false);
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
 
+  const { isAuthenticated, logout } = useContext(AuthContext);  
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    
+    navigate("/login");
+  };
+
+  const toggleNavbar = () => {
+    setIsNavbarActive(!isNavbarActive);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownActive(!isDropdownActive);
+  };
 
   return (
-    <div>
+    <section>
       <header>
-      <nav className="navbar is-flex is-justify-content-space-between is-align-items-center px-6 py-3 has-text-black mt-2 has-background-black">
-        {/* {left side} */}
-        <div className="is-flex is-align-items-center is-gap-3">
-          <Link to="/">
-            {/* <HiMiniBars3CenterLeft className="is-size-3" /> */}
-            <img className="image is-128x128 " src={logoImg} alt="Logo" style={{ width: "60px", height: "60px" }}/>
-          </Link>
+        <div className="container">
+          <nav
+            className="navbar has-background-black px-6 py-3"
+            role="navigation"
+            aria-label="main navigation"
+          >
+            {/* Navbar Brand (Left Side) */}
+            <div className="navbar-brand">
+              <Link to="/" className="navbar-item">
+                <img
+                  src={logoImg}
+                  alt="Company Logo"
+                  style={{ width: "70px", height: "70px" }}
+                />
+                
+              </Link>
 
-          <div className=" is-flex is-align-items-center ">
-            <span className="  ">
-              <IoSearchOutline className="has-position-absolute left-3  is-size-4 has-text-white"  />
-            </span>
-            <input
-              type="text"
-              placeholder="Search here"
-              className="input custom-input"
-            />
-          </div> 
-         </div>
+              
 
-        {/* {center} */}
-        <div className="columns is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd is-hidden-mobile  ">
-          <Link className="column has-text-white" to="/">Home</Link>
-          <Link className="column has-text-white" to="/about">About</Link>
-          <Link className="column has-text-white" to="/campaign">Campaign</Link>
-          <Link className="column has-text-white" to="/contact">Contact</Link>
-
-        </div>
-
-        
-
-        {/* {right side} */}
-        <div  className="is-flex is-align-items-center is-gap-3 has-text-white">
-          
-      
-          <Link to="/login"> <HiOutlineUser className="is-size-3 has-background-white px-1 py-1 has-text-black is-hidden-mobile " style={{borderRadius: "100%" }}  /></Link>
-
-          <div >
-            
-              <button className="is-hidden-tablet" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                <HiMiniBars3CenterLeft className="is-size-3" />
-              </button>
-
-              {/* {show dropdown} */}
-              {
-                isDropdownOpen && (
-                  <div className="">  
-                    <ul className="is-flex is-flex-direction-column is-align-items-start  is-justify-content-center has-background-white">
-                      {
-                        navigation.map((item) => (
-                          <li key={item.name} onClick={() => setIsDropdownOpen(false)}>
-                            <Link to={item.href} >{item.name}</Link>
-                          </li>
-                        ))
-                      }
-                    </ul>
+              {/* Mobile Search Box (Optional) */}
+              <div className="navbar-item is-hidden-tablet">
+                <div className="field">
+                  <div className="control has-icons-left">
+                    <input
+                      type="text"
+                      className="input"
+                      placeholder="Search here"
+                    />
+                    <span className="icon is-small is-left">
+                      <IoSearchOutline className="is-size-4 has-text-white" />
+                    </span>
                   </div>
-                )
+                </div>
+              </div>
 
-              }
-            
-          </div>
+              {/* Mobile Navbar Burger (visible only on mobile) */}
+              <button
+                type="button"
+                className={`navbar-burger burger is-hidden-tablet ${
+                  isNavbarActive ? "is-active" : ""
+                }`}
+                aria-label="menu"
+                aria-expanded={isNavbarActive ? "true" : "false"}
+                onClick={toggleNavbar}
+              >
+                <span aria-hidden="true" style={{ background: "white" }}></span>
+                <span aria-hidden="true" style={{ background: "white" }}></span>
+                <span aria-hidden="true" style={{ background: "white" }}></span>
+              </button>
+            </div>
 
+            {/* Navbar Menu */}
+            <div className={`navbar-menu ${isNavbarActive ? "is-active" : ""}`}>
+              {/* Desktop Navigation (Left Side) */}
+              <div className="navbar-start is-hidden-touch">
+                {navigation.slice(0, 4).map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className="navbar-item has-text-white"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+
+              {/* Desktop Right Side */}
+              <div className="navbar-end is-hidden-touch">
+                <div className="navbar-item">
+                  {isAuthenticated ? (
+                    <>
+                      <button
+                        className="button  ml-2 is-size-"
+                        onClick={() => navigate("/kyc-form")}
+                      >
+                        KYC Complete
+                      </button>
+
+                      <button className="button" onClick={handleLogout}>
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    // If not authenticated, show a dropdown for login/register actions
+                    <div
+                      className={`dropdown ${
+                        isDropdownActive ? "is-active" : ""
+                      }`}
+                    >
+                      <div className="dropdown-trigger">
+                        <button
+                          className="button"
+                          aria-haspopup="true"
+                          aria-controls="dropdown-menu"
+                          onClick={toggleDropdown}
+                        >
+                          <span>Register/Login</span>
+                          <span className="icon is-small">
+                            <i
+                              className="fas fa-angle-down"
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        className="dropdown-menu"
+                        id="dropdown-menu"
+                        role="menu"
+                      >
+                        <div className="dropdown-content">
+                          <Link
+                            to="/login"
+                            className="dropdown-item"
+                            onClick={() => setIsDropdownActive(false)}
+                          >
+                            Login
+                          </Link>
+                          <Link
+                            to="/register"
+                            className="dropdown-item"
+                            onClick={() => setIsDropdownActive(false)}
+                          >
+                            Register
+                          </Link>
+                          <hr className="dropdown-divider" />
+                          <p className="pl-4">Welcome Celeb</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Mobile Navigation (Collapsible Dropdown) */}
+              <div className="navbar-start is-hidden-desktop">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className="navbar-item"
+                    onClick={() => setIsNavbarActive(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </nav>
         </div>
-        
-      </nav>
-    </header>
-    </div>
+      </header>
+    </section>
   );
 };
 
